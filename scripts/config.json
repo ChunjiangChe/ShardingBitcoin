@@ -1,0 +1,27 @@
+{
+  "shard_num": 5,
+  "shard_size": 5,
+  "block_size": 2048,
+  "confirmation_depth": 6,
+  "mining_interval": 1000000,
+  "tx_generation_interval": 1000000,
+  "runtime": 1000,
+  "iteration": 0,
+  "inclusive_diff": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "exclusive_diffs": [
+    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  ],
+  "propagation_delay": 100,
+  "bandwidths": [
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
+  ],
+  "description": "what the experiment aims to do"
+}

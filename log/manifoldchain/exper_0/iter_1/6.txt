@@ -1,0 +1,16 @@
+block 77f2..f865 created at 1969-12-31 19:00:00
+block 0000..7d59 created at 2025-10-02 16:56:01
+block 0000..07f5 created at 2025-10-02 16:57:23
+block 0000..d6e5 created at 2025-10-02 16:58:17
+block 0000..f47e created at 2025-10-02 17:02:46
+block 0000..51a3 created at 2025-10-02 17:07:10
+block 0000..126d created at 2025-10-02 17:08:19
+block 0000..dd17 created at 2025-10-02 17:10:00
+block 0000..f940 created at 2025-10-02 17:12:35
+block 0000..fce1 created at 2025-10-02 17:15:58
+block 0000..2222 created at 2025-10-02 17:17:07
+block 0000..cf5e created at 2025-10-02 17:18:12
+block 0000..c265 created at 2025-10-02 17:20:05
+block 0000..8c46 created at 2025-10-02 17:23:57
+forking_rate: 0.94 total_block_num: 17 main_chain_block_num: 16
+ex_block_num: 14 in_block_num: 2

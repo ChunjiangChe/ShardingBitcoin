@@ -1,0 +1,11 @@
+#!/bin/bash
+for ((i=0; i<5; i++))
+do
+  for ((j=0; j<5; j++))
+  do
+    node_id=$[i*5+j]
+    cd nodes
+    ./start_node_$node_id.sh 2>&1 | tee ../../../../../log/optchain/exper_0/iter_2/exec_log/$node_id.log &
+    cd ..
+  done
+done

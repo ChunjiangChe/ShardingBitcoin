@@ -1,0 +1,25 @@
+block 6f51..7d96 created at 1969-12-31 19:00:00
+block 0000..d75a created at 2025-10-02 16:56:46
+block 0000..ae2b created at 2025-10-02 16:59:57
+block 0000..4b67 created at 2025-10-02 17:00:31
+block 0000..0a6c created at 2025-10-02 17:02:46
+block 0000..3d86 created at 2025-10-02 17:03:48
+block 0000..063d created at 2025-10-02 17:05:03
+block 0000..ab2e created at 2025-10-02 17:06:30
+block 0000..6b4c created at 2025-10-02 17:07:16
+block 0000..04a6 created at 2025-10-02 17:08:23
+block 0000..90ee created at 2025-10-02 17:09:17
+block 0000..1dfd created at 2025-10-02 17:11:19
+block 0000..86ad created at 2025-10-02 17:12:45
+block 0000..0ee4 created at 2025-10-02 17:15:23
+block 0000..4e69 created at 2025-10-02 17:16:34
+block 0000..741a created at 2025-10-02 17:17:03
+block 0000..af1e created at 2025-10-02 17:18:53
+block 0000..7179 created at 2025-10-02 17:20:50
+block 0000..d528 created at 2025-10-02 17:22:39
+block 0000..c14f created at 2025-10-02 17:26:00
+block 0000..2662 created at 2025-10-02 17:27:25
+block 0000..22b5 created at 2025-10-02 17:29:58
+block 0000..06c2 created at 2025-10-02 17:32:05
+forking_rate: 0.76 total_block_num: 33 main_chain_block_num: 25
+ex_block_num: 23 in_block_num: 2

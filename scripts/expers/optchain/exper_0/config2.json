@@ -1,0 +1,18 @@
+{
+  "shard_num": 3,
+  "shard_size": 3,
+  "block_size": 2048,
+  "symbol_size": 256,
+  "prop_size": 5,
+  "avai_size": 5,
+  "ex_req_num": 3,
+  "in_req_num": 1,
+  "confirmation_depth": 7,
+  "mining_interval": 0,
+  "runtime": 10,
+  "tx_diff": "00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "prop_diff": "0000033333333333333333333333333333333333333333333333333333333333",
+  "avai_diff": "0000011111111111111111111111111111111111111111111111111111111111",
+  "in_avai_diff": "000000369d0369d0369d0369d0369d0369d0369d0369d0369d0369d0369d0369",
+  "description": "test for demo"
+}

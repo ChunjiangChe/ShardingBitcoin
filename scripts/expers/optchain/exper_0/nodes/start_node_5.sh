@@ -1,0 +1,3 @@
+#!/bin/bash
+cd ../../../../../
+sudo ./target/debug/powchain optchain --p2p 127.0.0.1:6010 --api 127.0.0.1:7010 -c 127.0.0.1:6000 -c 127.0.0.1:6001 -c 127.0.0.1:6002 -c 127.0.0.1:6003 -c 127.0.0.1:6004 --shardId 1 --nodeId 0 --experNumber 0 --experIter 2 --shardNum 5 --shardSize 5 --blockSize 2048 --symbolSize 256 --propSize 5 --avaiSize 5 --eReq 3 --iReq 1 --k 6 --tDiff 0001c7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff --pDiff 00005b3333333333333333333333333333333333333333333333333333333333 --aDiff 0000123d70a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d7 --iDiff 0000003333333333333333333333333333333333333333333333333333333333

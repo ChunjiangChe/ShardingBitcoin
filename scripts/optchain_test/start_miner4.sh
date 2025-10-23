@@ -1,0 +1,1 @@
+curl http://127.0.0.1:7011/miner/start?lambda=500000

@@ -1,0 +1,2 @@
+cd ../../
+./target/debug/optchain --p2p 127.0.0.1:6010 --api 127.0.0.1:7010 -c 127.0.0.1:6000 --shardId 1 --nodeId 0 --experNumber 0 --experIter 1 --shardNum 2 --shardSize 2 --blockSize 2048 --symbolSize 256 --propSize 4 --avaiSize 4 --eReq 1 --iReq 1 --k 7 --tDiff 7cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3 --pDiff  20c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c3 --aDiff 09c09c09c09c09c09c09c09c09c09c09c09c09c09c09c09c09c09c09c09c09c0 --iDiff 0270270270270270270270270270270270270270270270270270270270270270

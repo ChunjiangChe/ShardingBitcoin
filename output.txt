@@ -1,0 +1,207 @@
+warning: unused import: `self`
+ --> src/tests/unit_tests/manifoldchain/transaction_test.rs:1:12
+  |
+1 | use rand::{self};
+  |            ^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Hashable`
+ --> src/tests/unit_tests/manifoldchain/transaction_test.rs:8:16
+  |
+8 |         hash::{Hashable, H256},
+  |                ^^^^^^^^
+
+warning: unused imports: `KeyPair`, `Signature`, and `self`
+  --> src/tests/unit_tests/manifoldchain/transaction_test.rs:11:23
+   |
+11 | use ring::signature::{self, Ed25519KeyPair, Signature, KeyPair};
+   |                       ^^^^                  ^^^^^^^^^  ^^^^^^^
+
+warning: unused import: `testimony::*`
+ --> src/tests/unit_tests/manifoldchain/mempool_test.rs:4:9
+  |sasa
+4 |         testimony::*,
+  |         ^^^^^^^^^^^^
+
+warning: unused imports: `Hashable`, `exclusive_block::*`, and `inclusive_block::*`
+  --> src/tests/unit_tests/manifoldchain/block_test.rs:5:13
+   |
+5  |             exclusive_block::*,
+   |             ^^^^^^^^^^^^^^^^^^
+6  |             inclusive_block::*,
+   |             ^^^^^^^^^^^^^^^^^^
+...
+14 |             Hashable,
+   |             ^^^^^^^^
+
+warning: unused imports: `KeyPair`, `Signature`, and `self`
+  --> src/tests/unit_tests/manifoldchain/block_test.rs:19:23
+   |
+19 | use ring::signature::{self, Ed25519KeyPair, Signature, KeyPair};
+   |                       ^^^^                  ^^^^^^^^^  ^^^^^^^
+
+warning: unused imports: `KeyPair`, `Signature`, and `self`
+  --> src/tests/unit_tests/manifoldchain/database_test.rs:19:23
+   |
+19 | use ring::signature::{self, Ed25519KeyPair, Signature, KeyPair};
+   |                       ^^^^                  ^^^^^^^^^  ^^^^^^^
+
+warning: unused imports: `Deserialize` and `Serialize`
+  --> src/tests/unit_tests/manifoldchain/database_test.rs:21:13
+   |
+21 | use serde::{Serialize, Deserialize};
+   |             ^^^^^^^^^  ^^^^^^^^^^^
+
+warning: unused import: `transaction::*`
+ --> src/tests/unit_tests/optchain/block_test.rs:3:9
+  |
+3 |         transaction::*,
+  |         ^^^^^^^^^^^^^^
+
+warning: unused imports: `DateTime` and `Local`
+ --> src/tests/bash_tests/cloud_test.rs:2:14
+  |
+2 | use chrono::{DateTime, Local};
+  |              ^^^^^^^^  ^^^^^
+
+warning: unused variable: `ini_tx_2`
+  --> src/tests/unit_tests/manifoldchain/transaction_test.rs:28:9
+   |
+28 |     let ini_tx_2 = Transaction::create_initial_tx((&user2, &key2), 10);   
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_ini_tx_2`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `ini_tx_4`
+  --> src/tests/unit_tests/manifoldchain/transaction_test.rs:30:9
+   |
+30 |     let ini_tx_4 = Transaction::create_initial_tx((&user4, &key4), 10);
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_ini_tx_4`
+
+warning: unused variable: `Non`
+   --> src/tests/unit_tests/manifoldchain/mempool_test.rs:194:9
+    |
+194 |         Non => {}
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_Non`
+
+warning: unused variable: `Non`
+   --> src/tests/unit_tests/manifoldchain/mempool_test.rs:200:9
+    |
+200 |         Non => {}
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_Non`
+
+warning: unused variable: `user3`
+  --> src/tests/unit_tests/manifoldchain/block_test.rs:24:9
+   |
+24 |     let user3: H256 = (&[3u8; 32]).into();
+   |         ^^^^^ help: if this is intentional, prefix it with an underscore: `_user3`
+
+warning: unused variable: `key3`
+  --> src/tests/unit_tests/manifoldchain/block_test.rs:28:9
+   |
+28 |     let key3: Ed25519KeyPair = key_pair::random();
+   |         ^^^^ help: if this is intentional, prefix it with an underscore: `_key3`
+
+warning: unused variable: `tx2`
+  --> src/tests/unit_tests/manifoldchain/block_test.rs:32:9
+   |
+32 |     let tx2 = Transaction::create_initial_tx((&user4, &key4), 10);
+   |         ^^^ help: if this is intentional, prefix it with an underscore: `_tx2`
+
+warning: unused variable: `i`
+  --> src/tests/unit_tests/manifoldchain/block_test.rs:54:9
+   |
+54 |     for i in 0..tx_size {
+   |         ^ help: if this is intentional, prefix it with an underscore: `_i`
+
+warning: unused variable: `user3`
+  --> src/tests/unit_tests/manifoldchain/database_test.rs:29:9
+   |
+29 |     let user3: H256 = (&[3u8; 32]).into();
+   |         ^^^^^ help: if this is intentional, prefix it with an underscore: `_user3`
+
+warning: unused variable: `key3`
+  --> src/tests/unit_tests/manifoldchain/database_test.rs:33:9
+   |
+33 |     let key3: Ed25519KeyPair = key_pair::random();
+   |         ^^^^ help: if this is intentional, prefix it with an underscore: `_key3`
+
+warning: unused variable: `tx2`
+  --> src/tests/unit_tests/manifoldchain/database_test.rs:37:9
+   |
+37 |     let tx2 = Transaction::create_initial_tx((&user4, &key4), 10);
+   |         ^^^ help: if this is intentional, prefix it with an underscore: `_tx2`
+
+warning: unused variable: `i`
+  --> src/tests/unit_tests/manifoldchain/database_test.rs:59:9
+   |
+59 |     for i in 0..tx_size {
+   |         ^ help: if this is intentional, prefix it with an underscore: `_i`
+
+warning: unused variable: `e`
+   --> src/tests/unit_tests/manifoldchain/database_test.rs:140:13
+    |
+140 |         Err(e) => {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `e`
+   --> src/tests/unit_tests/manifoldchain/database_test.rs:161:13
+    |
+161 |         Err(e) => {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `e`
+   --> src/tests/unit_tests/manifoldchain/database_test.rs:185:13
+    |
+185 |         Err(e) => {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `e`
+   --> src/tests/unit_tests/manifoldchain/database_test.rs:206:13
+    |
+206 |         Err(e) => {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `e`
+   --> src/tests/unit_tests/manifoldchain/database_test.rs:226:13
+    |
+226 |         Err(e) => {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `e`
+   --> src/tests/unit_tests/manifoldchain/database_test.rs:246:13
+    |
+246 |         Err(e) => {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `shard_id`
+  --> src/tests/unit_tests/optchain/block_test.rs:14:9
+   |
+14 |     let shard_id: u32 = 7;
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_shard_id`
+
+warning: variable `Non` should have a snake case name
+   --> src/tests/unit_tests/manifoldchain/mempool_test.rs:194:9
+    |
+194 |         Non => {}
+    |         ^^^ help: convert the identifier to snake case: `non`
+    |
+    = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `Non` should have a snake case name
+   --> src/tests/unit_tests/manifoldchain/mempool_test.rs:200:9
+    |
+200 |         Non => {}
+    |         ^^^ help: convert the identifier to snake case: `non`
+
+warning: `optchain` (bin "optchain" test) generated 31 warnings (run `cargo fix --bin "optchain" --tests` to apply 10 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.15s
+     Running unittests src/main.rs (target/debug/deps/optchain-3cff30800af203cc)
+
+running 1 test
+random hash:d0aa..9162
+test tests::unit_tests::optchain::block_test::test_block_header ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.00s
+

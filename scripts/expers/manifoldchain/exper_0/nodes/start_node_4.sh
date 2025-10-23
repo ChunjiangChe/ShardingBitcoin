@@ -1,0 +1,3 @@
+#!/bin/bash
+cd ../../../../../
+sudo ./target/debug/powchain manifoldchain --p2p 127.0.0.1:6004 --api 127.0.0.1:7004 -c 127.0.0.1:6000 -c 127.0.0.1:6001 -c 127.0.0.1:6002 -c 127.0.0.1:6003 --shardId 0 --nodeId 4 --experNumber 0 --experIter 1 --shardNum 5 --shardSize 5 --blockSize 2048 --k 6 --domesticRatio 0.7 --eDiff 00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff --iDiff 000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff

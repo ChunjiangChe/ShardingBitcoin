@@ -1,0 +1,19 @@
+{
+  "shard_num": 5,
+  "shard_size": 5,
+  "block_size": 2048,
+  "confirmation_depth": 6,
+  "mining_interval": 0,
+  "tx_generation_interval": 100000,
+  "runtime": 200,
+  "domestic_ratio": 0.7,
+  "inclusive_diff": "000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "exclusive_diffs": [
+    "00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "00001cf5c28f5c28f5c28f5c28f5c28f5c28f5c28f5c28f5c28f5c28f5c28f5c",
+    "0000311eb851eb851eb851eb851eb851eb851eb851eb851eb851eb851eb851eb",
+    "00004b0a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d70a3d703d",
+    "00005b3333333333333333333333333333333333333333333333333333333333"
+  ],
+  "description": "test for demo"
+}
