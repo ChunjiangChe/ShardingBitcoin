@@ -206,7 +206,7 @@ pub fn start(sub_com: &clap::ArgMatches) {
 
     // let api_port: u16 = api_addr.port();
     let order_genesis_block = OrderBlock::default();
-    let ordering_chain = Blockchain::new(VersaBlock::OrderBlock(order_genesis_block), &config);
+    let order_chain = Blockchain::new(VersaBlock::OrderBlock(order_genesis_block), &config);
 
 
     let shard_chains: Vec<Blockchain> = (0..config.shard_num)
@@ -228,19 +228,13 @@ pub fn start(sub_com: &clap::ArgMatches) {
     //     .collect();
     let multichain = Arc::new(
         Mutex::new(
-            Multichain::new(prop_chain, avai_chains, &config)
+            Multichain::new(order_chain, shard_chains, &config)
         )
     );
 
     let mempool = Arc::new(
         Mutex::new(
             Mempool::new(&config)
-        )
-    );
-
-    let symbolpool = Arc::new(
-        Mutex::new(
-            SymbolPool::new(&config)
         )
     );
 
@@ -258,7 +252,6 @@ pub fn start(sub_com: &clap::ArgMatches) {
         &server,
         &multichain,
         &mempool,
-        &symbolpool,
         &config,
     );
     worker_ctx.start();
@@ -270,7 +263,6 @@ pub fn start(sub_com: &clap::ArgMatches) {
         finished_block_chan, 
         &multichain,
         &mempool,
-        &symbolpool,
         &config,
     );
     miner_ctx.start();

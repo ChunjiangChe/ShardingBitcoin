@@ -1,6 +1,6 @@
 use crate::{
     types::address::Address,
-    optchain::network::{
+    sharding_bitcoin::network::{
         peer,
         message::Message,
     },

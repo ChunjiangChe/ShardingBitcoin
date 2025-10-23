@@ -17,14 +17,12 @@ use crate::{
         hash::{H256, Hashable},
         random::Random,
     }, 
-    optchain::{
+    sharding_bitcoin::{
         block::{
             Content,
             BlockContent,
-            Block,
-            transaction_block::TransactionBlock,
-            proposer_block::ProposerBlock,
-            availability_block::AvailabilityBlock,
+            ShardBlock,
+            OrderBlock,
             versa_block::VersaBlock,
         },
         multichain::Multichain,
@@ -95,7 +93,6 @@ pub fn new(multichain: &Arc<Mutex<Multichain>>,
 
 pub enum MinerMessage {
     VersaBlk(VersaBlock),
-    TxBlk((TransactionBlock, BlockContent)),
 }
 
 impl Handle {
@@ -138,9 +135,8 @@ impl Context {
 
     fn miner_loop(&mut self) {
         // main mining loop
-        let mut pre_prop_parent = H256::default();
-        let mut pre_inter_parent = H256::default();
-        let mut pre_global_parents = H256::default();
+        let mut pre_order_parent = H256::default();
+        let mut pre_shard_parent = H256::default();
         let mut pre_hybrid_block = Block::default();
         loop {
             // check and react to control signals

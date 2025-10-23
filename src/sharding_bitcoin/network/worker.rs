@@ -2,7 +2,7 @@ use crate::{
     types::{
         hash::{H256, Hashable},
     },
-    optchain::{
+    sharding_bitcoin::{
         network::{
             message::Message,
             peer,
@@ -10,7 +10,6 @@ use crate::{
         },
         block::{
             Info, 
-            transaction_block::TransactionBlock,
             versa_block::{
                 VersaBlock,
                 VersaHash,
@@ -20,11 +19,6 @@ use crate::{
         // validator::{Validator},
         mempool::Mempool,
         multichain::Multichain,
-        symbolpool::{
-            SymbolPool,
-            SymbolIndex,
-            Symbol,
-        },
     }
 };
 use log::{debug, warn, error, info};
@@ -45,7 +39,6 @@ pub struct Worker {
     server: ServerHandle,
     multichain: Arc<Mutex<Multichain>>,
     mempool: Arc<Mutex<Mempool>>,
-    symbolpool: Arc<Mutex<SymbolPool>>,
     config: Configuration,
     // validator: Validator,
     blk_buff: HashMap<VersaHash, Vec<VersaBlock>>,
@@ -63,7 +56,6 @@ impl Worker {
         server: &ServerHandle,
         multichain: &Arc<Mutex<Multichain>>,
         mempool: &Arc<Mutex<Mempool>>,
-        symbolpool: &Arc<Mutex<SymbolPool>>,
         config: &Configuration,
     ) -> Self {
         Self {
@@ -73,7 +65,6 @@ impl Worker {
             multichain: Arc::clone(multichain),
             blk_buff: HashMap::new(),
             mempool: Arc::clone(mempool),
-            symbolpool: Arc::clone(symbolpool),
             config: config.clone(),
             unavailable_cmt2avai_blocks: HashMap::new(),
             unavailable_avai_block2cmts: HashMap::new(),

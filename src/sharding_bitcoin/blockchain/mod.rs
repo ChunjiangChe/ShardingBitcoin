@@ -30,7 +30,6 @@ pub struct Blockchain {
     //Rust does not allow two pointers to point to the same variable
     hash2node: HashMap<H256, Node>, //blk_hash -> node
     root: Box<Node>,
-    tx_map: HashMap<H256, Vec<(H256, usize)>>, //tx_hash -> (block_hash, index), one tx may exit in
     //multiple blocks
     pub longest_chain_hash: H256,
     pub height: usize,
@@ -287,7 +286,6 @@ impl Blockchain {
             hash2blk,
             hash2node,
             root,
-            tx_map: HashMap::new(),
             longest_chain_hash,
             height,
             config: config.clone(),
@@ -399,33 +397,6 @@ impl Blockchain {
         } 
     }
 
-    // pub fn is_block_in_longest_chain(&self, hash: &H256) -> bool {
-    //     match Node::get_node_by_hash(&self.root, hash) {
-    //         Some(node) => node.longest_height == self.height,
-    //         None => false
-    //     }
-    // }
-
-    // pub fn get_block_with_tx(&self, tx_hash: &H256) -> Option<(VersaBlock, usize)> {
-    //     match self.tx_map.get(tx_hash) {
-    //         Some(locations) => {
-    //             let longest_chain_blks: Vec<H256> = self.all_blocks_in_longest_chain();
-    //             for location in locations.iter() {
-    //                 let blk_hash = &location.0;
-    //                 let tx_index = location.1;
-    //                 if longest_chain_blks.contains(blk_hash) {
-    //                     let blk = self.hash2blk.get(blk_hash).unwrap().clone();
-    //                     return Some((blk, tx_index));
-    //                 } else {
-    //                     return None;
-    //                 }
-    //             }
-    //             None 
-    //         },
-    //         None => None,
-    //     }
-    // }
-
 
     pub fn get_block_height(&self, block_hash: &H256) -> Option<usize> {
         match self.hash2node.get(block_hash) {
@@ -436,41 +407,7 @@ impl Blockchain {
         }
     }
 
-    pub fn get_tx_blk_in_longest_chain(&self, tx_blk_hash: &H256) -> Option<TransactionBlock> {
-        match self.cmt2blk.get(tx_blk_hash) {
-            Some(consensus_blk) => {
-                match self.all_blocks_in_longest_chain().contains(&consensus_blk) {
-                    true => Some(self.hash2cmt.get(tx_blk_hash).unwrap()),
-                    false => None,
-                }
 
-            }
-            None => None,
-        }
-        
-    }
-
-    pub fn get_all_tx_blk_in_longest_chain(&self) -> Option<Vec<TransactionBlock>> {
-        let all_hashes = self.all_blocks_in_longest_chain();
-        if all_hashes.len() <= 0 {
-            return None;
-        } else {
-            let all_blocks: Vec<VersaBlock> = all_hashes
-                .iter()
-                .map(|hash| self.hash2blk.get(hash).unwrap())
-                .collect();
-            let all_tx_blocks: Vec<Vec<TransactionBlock>> = all_blocks
-                .into_iter()
-                .map(|block| match block {
-                    VersaBlock::PropBlock(prop_block) => prop_block.get_prop_tx_set(),
-                    VersaBlock::ExAvaiBlock(avai_block) => avai_block.get_avai_tx_set(),
-                    VersaBlock::InAvaiBlock(avai_block) => avai_block.get_avai_tx_set(),
-                })
-                .collect();
-            let all_tx_blocks: Vec<TransactionBlock> = all_tx_blocks.into_iter().flatten().collect();
-            return Some(all_tx_blocks);
-        }
-    }
 
     pub fn get_forking_rate(&self) -> f64 {
         let main_chain_blocks = self.all_blocks_in_longest_chain();
@@ -482,29 +419,6 @@ impl Blockchain {
     }
     
 
-    // pub fn log_to_file(&self) -> Result<(), Error> {
-    //     let main_chain_blocks = self.all_blocks_in_longest_chain();
-    //     let main_chain_block_num = main_chain_blocks.len() as f64;
-    //     let total_block_num = self.hash2blk.len() as f64;
-
-    //     let forking_rate = main_chain_block_num / total_block_num;
-
-    //     let path = format!("./log/optchain/exper_{}/iter_{}/{}.txt", self.config.exper_number, self.config.exper_iter, self.config.node_id);
-    //     let mut output = File::create(path)?;
-    //     write!(output, "forking_rate: {:.2} total_block_num: {} main_chain_block_num: {}\n", forking_rate, total_block_num, main_chain_block_num)?;
-    //     for block in main_chain_blocks.iter() {
-    //         let versa_block = self.hash2blk.get(block).unwrap();
-    //         if let VersaBlock::InBlock(_) = versa_block.clone() {
-    //             continue;
-    //         }
-    //         let timestamp = versa_block.get_timestamp();
-    //         let datetime: DateTime<Local> = timestamp.into();
-    //         let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
-    //         write!(output, "block {:?} created at {}\n", versa_block.hash(), formatted_datetime);
-    //     } 
-
-    //     Ok(())
-    // }
 
 }
 
