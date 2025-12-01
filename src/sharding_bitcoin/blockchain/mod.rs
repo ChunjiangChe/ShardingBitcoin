@@ -307,14 +307,14 @@ impl Blockchain {
     }
 
 
-    pub fn insert_block_with_parent(&mut self, block: VersaBlock) 
+    pub fn insert_block_with_parent(&mut self, block: VersaBlock, parent: &H256) 
         -> Result<bool, String> 
     {
         let blk_hash = block.hash();
         if let Some(_) = self.hash2blk.get(&blk_hash) {
             return Err(String::from("Block already exits"));
         }
-        let parent = block.get_parent();
+        
         //check whether the valid parent set contains the given parent
         if let None = self.hash2blk.get(&parent) {
             return Err(String::from("Parent doesn't exisit"));

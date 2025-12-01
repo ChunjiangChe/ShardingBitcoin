@@ -1,6 +1,6 @@
 use serde::Serialize;
 use crate::{
-    optchain::{
+    sharding_bitcoin::{
         multichain::Multichain,
         miner::Handle as MinerHandle,
         network::{
@@ -149,69 +149,69 @@ impl Server {
                             network.broadcast(Message::Ping(String::from("Test ping")));
                             respond_result!(req, true, "ok");
                         }
-                        "/blockchain/log" => {
-                            let path = format!("./log/optchain/exper_{}/iter_{}/{}.txt", config.exper_number, config.exper_iter, config.shard_id*config.shard_size+config.node_id);
-                            let mut output = File::create(path).unwrap();
-                            //record proposer chain
-                            let prop_forking_rate = multichain
-                                .lock()
-                                .unwrap()
-                                .get_proposer_forking_rate();
-                            let _ = write!(output, "Proposer Chain forking rate {}:\n", prop_forking_rate);
-                            let all_prop_blocks = multichain
-                                .lock()
-                                .unwrap()
-                                .all_blocks_in_longest_proposer_chain();
-                            for prop_hash in all_prop_blocks.iter() {
-                                let prop_block = multichain
-                                    .lock()
-                                    .unwrap()
-                                    .get_proposer_block(&prop_hash)
-                                    .unwrap();
-                                let timestamp = prop_block.get_timestamp();
-                                let datetime: DateTime<Local> = timestamp.into();
-                                let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
-                                let _ = write!(output, "proposer block {:?} created at {}\n", prop_hash, formatted_datetime);
-                            }
-                            let avai_forking_rate = multichain
-                                .lock()
-                                .unwrap()
-                                .get_availability_forking_rate_by_shard(config.shard_id);
-                            let _ = write!(output, "Availability Chain at shard {} forking rate {}:\n", config.shard_id, avai_forking_rate);
-                            let all_avai_blocks = multichain
-                                .lock()
-                                .unwrap()
-                                .all_blocks_in_longest_availability_chain_by_shard(config.shard_id);
-                            for avai_hash in all_avai_blocks.iter() {
-                                let avai_block = multichain
-                                    .lock()
-                                    .unwrap()
-                                    .get_avai_block_by_shard(&avai_hash, config.shard_id)
-                                    .unwrap();
-                                if avai_block.get_shard_id() != config.shard_id {
-                                    continue;
-                                }
-                                let timestamp = avai_block.get_timestamp();
-                                let datetime: DateTime<Local> = timestamp.into();
-                                let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
-                                let _ = write!(output, "availability block {:?} created at {}\n", avai_hash, formatted_datetime);
-                            }
-                            respond_result!(req, true, "ok");
-                        }
-                        "/blockchain/proposer-chain" => {
+                        // "/blockchain/log" => {
+                        //     let path = format!("./log/optchain/exper_{}/iter_{}/{}.txt", config.exper_number, config.exper_iter, config.shard_id*config.shard_size+config.node_id);
+                        //     let mut output = File::create(path).unwrap();
+                        //     //record proposer chain
+                        //     let prop_forking_rate = multichain
+                        //         .lock()
+                        //         .unwrap()
+                        //         .get_order_forking_rate();
+                        //     let _ = write!(output, "Proposer Chain forking rate {}:\n", prop_forking_rate);
+                        //     let all_prop_blocks = multichain
+                        //         .lock()
+                        //         .unwrap()
+                        //         .all_blocks_in_longest_proposer_chain();
+                        //     for prop_hash in all_prop_blocks.iter() {
+                        //         let prop_block = multichain
+                        //             .lock()
+                        //             .unwrap()
+                        //             .get_proposer_block(&prop_hash)
+                        //             .unwrap();
+                        //         let timestamp = prop_block.get_timestamp();
+                        //         let datetime: DateTime<Local> = timestamp.into();
+                        //         let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
+                        //         let _ = write!(output, "proposer block {:?} created at {}\n", prop_hash, formatted_datetime);
+                        //     }
+                        //     let avai_forking_rate = multichain
+                        //         .lock()
+                        //         .unwrap()
+                        //         .get_availability_forking_rate_by_shard(config.shard_id);
+                        //     let _ = write!(output, "Availability Chain at shard {} forking rate {}:\n", config.shard_id, avai_forking_rate);
+                        //     let all_avai_blocks = multichain
+                        //         .lock()
+                        //         .unwrap()
+                        //         .all_blocks_in_longest_availability_chain_by_shard(config.shard_id);
+                        //     for avai_hash in all_avai_blocks.iter() {
+                        //         let avai_block = multichain
+                        //             .lock()
+                        //             .unwrap()
+                        //             .get_avai_block_by_shard(&avai_hash, config.shard_id)
+                        //             .unwrap();
+                        //         if avai_block.get_shard_id() != config.shard_id {
+                        //             continue;
+                        //         }
+                        //         let timestamp = avai_block.get_timestamp();
+                        //         let datetime: DateTime<Local> = timestamp.into();
+                        //         let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
+                        //         let _ = write!(output, "availability block {:?} created at {}\n", avai_hash, formatted_datetime);
+                        //     }
+                        //     respond_result!(req, true, "ok");
+                        // }
+                        "/blockchain/ordering-chain" => {
                             let v = multichain
                                 .lock()
                                 .unwrap()
-                                .all_blocks_in_longest_proposer_chain();
+                                .all_blocks_in_longest_order_chain();
                             let mut v_string: Vec<String> = v
                                 .into_iter()
                                 .map(|h| {
-                                    let proposer_versa_block = multichain
+                                    let order_versa_block = multichain
                                         .lock()
                                         .unwrap()
-                                        .get_proposer_block(&h)
+                                        .get_order_block(&h)
                                         .unwrap();
-                                    let timestamp = proposer_versa_block.get_timestamp();
+                                    let timestamp = order_versa_block.get_timestamp();
                                     let datetime: DateTime<Local> = timestamp.into();
                                     let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
 
@@ -224,24 +224,24 @@ impl Server {
                             let prop_forking_rate = multichain
                                 .lock()
                                 .unwrap()
-                                .get_proposer_forking_rate();
+                                .get_order_forking_rate();
                             v_string.push(format!("Proposer chain forking rate: {}", prop_forking_rate));
                             respond_json!(req, v_string);
                         }
-                        "/blockchain/availability-chain" => {
+                        "/blockchain/shard-chain" => {
                             let v = multichain
                                 .lock()
                                 .unwrap()
-                                .all_blocks_in_longest_availability_chain_by_shard(config.shard_id);
+                                .all_blocks_in_longest_shard_chain_by_shard(config.shard_id);
                             let mut v_string: Vec<String> = v
                                 .into_iter()
                                 .map(|h| {
-                                    let avai_versa_block = multichain
+                                    let shard_versa_block = multichain
                                         .lock()
                                         .unwrap()
-                                        .get_avai_block_by_shard(&h, config.shard_id)
+                                        .get_shard_block_by_shard(&h, config.shard_id)
                                         .unwrap();
-                                    let timestamp = avai_versa_block.get_timestamp();
+                                    let timestamp = shard_versa_block.get_timestamp();
                                     let datetime: DateTime<Local> = timestamp.into();
                                     let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
 
@@ -251,59 +251,59 @@ impl Server {
                                     format!("{left_slice}..{right_slice}:{formatted_datetime}")
                                 })
                                 .collect();
-                            let avai_forking_rate = multichain
+                            let shard_forking_rate = multichain
                                 .lock()
                                 .unwrap()
-                                .get_availability_forking_rate_by_shard(config.shard_id);
-                            v_string.push(format!("Availability chain at shard {} forking rate: {}", config.shard_id, avai_forking_rate));  
+                                .get_shard_forking_rate_by_shard(config.shard_id);
+                            v_string.push(format!("Shard chain at shard {} forking rate: {}", config.shard_id, shard_forking_rate));  
                             respond_json!(req, v_string);
                         }
-                        "/blockchain/availability-chain-with-shard" => {
-                            let params = url.query_pairs();
-                            let params: HashMap<_, _> = params.into_owned().collect();
-                            let shard_id = match params.get("shard-id") {
-                                Some(v) => v,
-                                None => {
-                                    respond_result!(req, false, "missing shard id");
-                                    return;
-                                }
-                            };
-                            let shard_id = match shard_id.parse::<usize>() {
-                                Ok(v) => v,
-                                Err(e) => {
-                                    respond_result!(
-                                        req, 
-                                        false, 
-                                        format!("error parsing shard id: {}", e)
-                                    );
-                                    return;
-                                }
-                            };
+                        // "/blockchain/availability-chain-with-shard" => {
+                        //     let params = url.query_pairs();
+                        //     let params: HashMap<_, _> = params.into_owned().collect();
+                        //     let shard_id = match params.get("shard-id") {
+                        //         Some(v) => v,
+                        //         None => {
+                        //             respond_result!(req, false, "missing shard id");
+                        //             return;
+                        //         }
+                        //     };
+                        //     let shard_id = match shard_id.parse::<usize>() {
+                        //         Ok(v) => v,
+                        //         Err(e) => {
+                        //             respond_result!(
+                        //                 req, 
+                        //                 false, 
+                        //                 format!("error parsing shard id: {}", e)
+                        //             );
+                        //             return;
+                        //         }
+                        //     };
 
-                            let v = multichain
-                                .lock()
-                                .unwrap()
-                                .all_blocks_in_longest_availability_chain_by_shard(shard_id);
-                            let v_string: Vec<String> = v
-                                .into_iter()
-                                .map(|h| {
-                                    let avai_versa_block = multichain
-                                        .lock()
-                                        .unwrap()
-                                        .get_avai_block_by_shard(&h, shard_id)
-                                        .unwrap();
-                                    let timestamp = avai_versa_block.get_timestamp();
-                                    let datetime: DateTime<Local> = timestamp.into();
-                                    let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
+                        //     let v = multichain
+                        //         .lock()
+                        //         .unwrap()
+                        //         .all_blocks_in_longest_availability_chain_by_shard(shard_id);
+                        //     let v_string: Vec<String> = v
+                        //         .into_iter()
+                        //         .map(|h| {
+                        //             let avai_versa_block = multichain
+                        //                 .lock()
+                        //                 .unwrap()
+                        //                 .get_avai_block_by_shard(&h, shard_id)
+                        //                 .unwrap();
+                        //             let timestamp = avai_versa_block.get_timestamp();
+                        //             let datetime: DateTime<Local> = timestamp.into();
+                        //             let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
 
-                                    let str = h.to_string();
-                                    let left_slice = &str[0..3];
-                                    let right_slice = &str[61..64];
-                                    format!("{left_slice}..{right_slice}:{formatted_datetime}")
-                                })
-                                .collect();
-                            respond_json!(req, v_string);
-                        }
+                        //             let str = h.to_string();
+                        //             let left_slice = &str[0..3];
+                        //             let right_slice = &str[61..64];
+                        //             format!("{left_slice}..{right_slice}:{formatted_datetime}")
+                        //         })
+                        //         .collect();
+                        //     respond_json!(req, v_string);
+                        // }
                         _ => {
                             let content_type =
                                 "Content-Type: application/json".parse::<Header>().unwrap();

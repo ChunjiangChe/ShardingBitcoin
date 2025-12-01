@@ -63,10 +63,9 @@ impl Multichain {
     pub fn insert_block_with_parent(
         &mut self,
         block: VersaBlock,
-        parent: &VersaHash,
-        shard_id: usize
+        parent: &VersaHash
     ) -> Result<bool, String> {
-        let blk_hash = block.hash();
+        // let blk_hash = block.hash();
         match parent.clone() {
             VersaHash::OrderHash(h) => {
                 match self.order_chain
@@ -144,7 +143,7 @@ impl Multichain {
             .tip()
     }
 
-    pub fn get_all_highest_avai_blocks(&self) -> Vec<(H256, usize)> {
+    pub fn get_all_highest_shard_blocks(&self) -> Vec<(H256, usize)> {
         (0..self.config.shard_num)
             .into_iter()
             .map(|i| (self.shard_chains.get(i).unwrap().tip(), i))

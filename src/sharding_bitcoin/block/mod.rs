@@ -40,6 +40,12 @@ pub struct BlockContent {
     confirmed_shard_blocks: Vec<H256>, //a set of confirmed shard_blocks' hashes
 }
 
+#[derive(Clone, Serialize, Deserialize, Debug, Eq, Hash, PartialEq)]
+pub struct Block {
+    header: BlockHeader,
+    content: BlockContent,
+    hash: H256,
+}
 
 #[derive(Clone, Serialize, Deserialize, Debug, Eq, Hash, PartialEq)]
 pub struct ShardBlock {
@@ -215,15 +221,6 @@ impl Info for BlockHeader {
     }
 }
 
-/*
-------------
-------------
-------------
-Block Content
-------------
-------------
-------------
-*/
 
 
 impl Default for BlockContent {
@@ -267,6 +264,16 @@ impl BlockContent {
     
 
     
+}
+
+impl Default for Block {
+    fn default() -> Self {
+        Block {
+            header: BlockHeader::default(),
+            content: BlockContent::default(),
+            hash: H256::default(),
+        }
+    }
 }
 
 impl Default for ShardBlock {
@@ -376,6 +383,8 @@ impl Info for OrderBlock {
     }
 }
 
+
+
 impl OrderBlock {
     pub fn create(
         header: BlockHeader,
@@ -397,4 +406,74 @@ impl OrderBlock {
     pub fn verify_hash(&self) -> bool {
         H256::pow_hash(&self.header.hash(), self.nonce) == self.hash
     }
+
+    pub fn get_confirmed_shard_blocks(&self) -> Vec<H256> {
+        self.confirmed_shard_blocks.clone()
+    }
+}
+
+impl Hashable for Block {
+    fn hash(&self) -> H256 {
+        self.hash.clone()
+    }
+}
+
+impl Block {
+    pub fn verify_hash(blk: &Block) -> bool {
+        blk.hash() == blk.header.hash()
+    }
+
+    pub fn get_header(&self) -> BlockHeader {
+        self.header.clone()
+    }
+
+    pub fn get_content(&self) -> BlockContent {
+        self.content.clone()
+    }
+
+    // pub fn get_tx_merkle_proof(&self, tx_index: usize) -> Vec<H256> {
+    //     self.content.get_tx_merkle_proof(tx_index)
+    // }
+
+    pub fn get_txs(&self) -> Vec<Transaction> {
+        self.content.get_txs()
+    }
+
+    pub fn construct(
+        shard_id: usize, 
+        order_parent: H256, 
+        shard_parent: H256,
+        txs: Vec<Transaction>,
+        confirmed_shard_blocks: Vec<H256>
+    ) -> Block {
+
+        // let txs = MerkleTree::<Transaction>::new(txs.as_slice());
+        let merkle_tree = MerkleTree::<Transaction>::new(txs.as_slice());
+        
+
+        let header: BlockHeader = BlockHeader {
+            shard_id: shard_id as u32, 
+            order_parent,
+            shard_parent,
+            merkle_root: merkle_tree.root(),
+            timestamp: SystemTime::now(),
+        };
+
+        let content: BlockContent = BlockContent {
+            txs: merkle_tree,
+            confirmed_shard_blocks,
+        };
+
+        let hash: H256 = header.hash();
+
+        Block {
+            header, 
+            content,
+            hash,
+        }
+    }
+    pub fn get_confirmed_shard_blocks(&self) -> Vec<H256> {
+        self.content.confirmed_shard_blocks.clone()
+    }
+    
 }
