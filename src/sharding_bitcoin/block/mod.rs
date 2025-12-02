@@ -25,26 +25,16 @@ Block definition
 
 #[derive(Clone, Serialize, Deserialize, Eq, Hash, PartialEq)]
 pub struct BlockHeader {
-    shard_id: u32, //the node's affiliated shard
-    order_parent: H256, //the hash of the highest proposer block
-    shard_parent: H256, //the hash of the highest proposer block
-    merkle_root: H256, //the root of a CMT generated from data_blob (is currently replaced by a normal Merkle root)
-    // nonce: u32,
-    // difficulty: H256,
+    shard_id: u32, 
+    order_parent: H256, 
+    shard_parent: H256, 
+    merkle_root: H256, 
     timestamp: SystemTime,
-    // merkle_root: H256,
 }
 #[derive(Clone, Serialize, Deserialize, Debug, Eq, Hash, PartialEq)]
 pub struct BlockContent {
-    txs: MerkleTree<Transaction>, //a set of transactions
-    confirmed_shard_blocks: Vec<H256>, //a set of confirmed shard_blocks' hashes
-}
-
-#[derive(Clone, Serialize, Deserialize, Debug, Eq, Hash, PartialEq)]
-pub struct Block {
-    header: BlockHeader,
-    content: BlockContent,
-    hash: H256,
+    txs: MerkleTree<Transaction>, 
+    confirmed_shard_blocks: Vec<H256>, 
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Eq, Hash, PartialEq)]
@@ -61,6 +51,13 @@ pub struct OrderBlock {
     confirmed_shard_blocks: Vec<H256>,
     hash: H256,
     nonce: u32,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Eq, Hash, PartialEq)]
+pub struct Block {
+    header: BlockHeader,
+    content: BlockContent,
+    hash: H256,
 }
 
 pub trait Content {
