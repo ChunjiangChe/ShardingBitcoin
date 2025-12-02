@@ -1,0 +1,2 @@
+cd ../../
+RUST_BACKTRACE=1 cargo run sharding_bitcoin --p2p 127.0.0.1:6011 --api 127.0.0.1:7011 -c 127.0.0.1:6000 -c 127.0.0.1:6010 -c 127.0.0.1:6001 --shardId 1 --nodeId 1 --experNumber 0 --experIter 1 --shardNum 2 --shardSize 2 --blockSize 2048 --k 7 --bDiff 3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3cf3 --oDiff  10c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c30c3

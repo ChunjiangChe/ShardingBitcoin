@@ -225,7 +225,7 @@ impl Server {
                                 .lock()
                                 .unwrap()
                                 .get_order_forking_rate();
-                            v_string.push(format!("Proposer chain forking rate: {}", prop_forking_rate));
+                            v_string.push(format!("Ordering chain forking rate: {}", prop_forking_rate));
                             respond_json!(req, v_string);
                         }
                         "/blockchain/shard-chain" => {
@@ -258,52 +258,52 @@ impl Server {
                             v_string.push(format!("Shard chain at shard {} forking rate: {}", config.shard_id, shard_forking_rate));  
                             respond_json!(req, v_string);
                         }
-                        // "/blockchain/availability-chain-with-shard" => {
-                        //     let params = url.query_pairs();
-                        //     let params: HashMap<_, _> = params.into_owned().collect();
-                        //     let shard_id = match params.get("shard-id") {
-                        //         Some(v) => v,
-                        //         None => {
-                        //             respond_result!(req, false, "missing shard id");
-                        //             return;
-                        //         }
-                        //     };
-                        //     let shard_id = match shard_id.parse::<usize>() {
-                        //         Ok(v) => v,
-                        //         Err(e) => {
-                        //             respond_result!(
-                        //                 req, 
-                        //                 false, 
-                        //                 format!("error parsing shard id: {}", e)
-                        //             );
-                        //             return;
-                        //         }
-                        //     };
+                        "/blockchain/shard-chain-with-shard" => {
+                            let params = url.query_pairs();
+                            let params: HashMap<_, _> = params.into_owned().collect();
+                            let shard_id = match params.get("shard-id") {
+                                Some(v) => v,
+                                None => {
+                                    respond_result!(req, false, "missing shard id");
+                                    return;
+                                }
+                            };
+                            let shard_id = match shard_id.parse::<usize>() {
+                                Ok(v) => v,
+                                Err(e) => {
+                                    respond_result!(
+                                        req, 
+                                        false, 
+                                        format!("error parsing shard id: {}", e)
+                                    );
+                                    return;
+                                }
+                            };
 
-                        //     let v = multichain
-                        //         .lock()
-                        //         .unwrap()
-                        //         .all_blocks_in_longest_availability_chain_by_shard(shard_id);
-                        //     let v_string: Vec<String> = v
-                        //         .into_iter()
-                        //         .map(|h| {
-                        //             let avai_versa_block = multichain
-                        //                 .lock()
-                        //                 .unwrap()
-                        //                 .get_avai_block_by_shard(&h, shard_id)
-                        //                 .unwrap();
-                        //             let timestamp = avai_versa_block.get_timestamp();
-                        //             let datetime: DateTime<Local> = timestamp.into();
-                        //             let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
+                            let v = multichain
+                                .lock()
+                                .unwrap()
+                                .all_blocks_in_longest_shard_chain_by_shard(shard_id);
+                            let v_string: Vec<String> = v
+                                .into_iter()
+                                .map(|h| {
+                                    let avai_versa_block = multichain
+                                        .lock()
+                                        .unwrap()
+                                        .get_shard_block_by_shard(&h, shard_id)
+                                        .unwrap();
+                                    let timestamp = avai_versa_block.get_timestamp();
+                                    let datetime: DateTime<Local> = timestamp.into();
+                                    let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
 
-                        //             let str = h.to_string();
-                        //             let left_slice = &str[0..3];
-                        //             let right_slice = &str[61..64];
-                        //             format!("{left_slice}..{right_slice}:{formatted_datetime}")
-                        //         })
-                        //         .collect();
-                        //     respond_json!(req, v_string);
-                        // }
+                                    let str = h.to_string();
+                                    let left_slice = &str[0..3];
+                                    let right_slice = &str[61..64];
+                                    format!("{left_slice}..{right_slice}:{formatted_datetime}")
+                                })
+                                .collect();
+                            respond_json!(req, v_string);
+                        }
                         _ => {
                             let content_type =
                                 "Content-Type: application/json".parse::<Header>().unwrap();

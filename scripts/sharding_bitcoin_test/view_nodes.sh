@@ -10,13 +10,13 @@ if [ $num_argu -eq 2 ]; then
       for ((j=0; j<$2; j++))
       do
         echo "node $j in shard $i:"
-        echo "proposer chain"  
-        ./get_longest_proposer_chain.sh $i $j
+        echo "order chain"  
+        ./get_longest_order_chain.sh $i $j
         echo ""
-        echo "availability chains"
+        echo "shard chains"
         for ((k=0; k<$1; k++))
         do
-          ./get_longest_availability_chain_with_shard.sh $i $j $k
+          ./get_longest_shard_chain_with_shard.sh $i $j $k
           echo ""
         done
  #      ./view_mempool.sh $i

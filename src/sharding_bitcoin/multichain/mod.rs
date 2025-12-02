@@ -50,11 +50,11 @@ impl Multichain {
         shard_chains: Vec<Blockchain>, 
         config: &Configuration) -> Self 
     {   
-
+        
         Multichain {
             order_chain,
             shard_chains,
-            confirmed_shard_blocks: vec![],
+            confirmed_shard_blocks: vec![vec![]; config.shard_num],
             longest_order_chain: vec![],
             config: config.clone(),
         }
